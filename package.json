@@ -1,5 +1,5 @@
 {
-  "name": "watchify",
+  "name": "@talmobi/watchify",
   "version": "3.11.1",
   "description": "watch mode for browserify builds",
   "main": "index.js",
@@ -26,9 +26,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/browserify/watchify.git"
+    "url": "git://github.com/talmobi/watchify.git"
   },
-  "homepage": "https://github.com/browserify/watchify",
+  "homepage": "https://github.com/talmobi/watchify",
   "keywords": [
     "browserify",
     "browserify-tool",
