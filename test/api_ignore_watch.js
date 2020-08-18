@@ -36,6 +36,7 @@ test('api ignore watch', function (t) {
     });
     var _timeout
     w.on('update', function () {
+        clearTimeout( _timeout )
         _timeout = setTimeout( function () {
             w.bundle(function (err, src) {
                 t.ifError(err);
