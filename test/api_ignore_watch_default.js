@@ -34,12 +34,21 @@ test('api ignore watch default', function (t) {
     var w = watchify(browserify(files.main, watchify.args), {
         ignoreWatch: true
     });
+    var _timeout
     w.on('update', function () {
-        w.bundle(function (err, src) {
-            t.ifError(err);
-            t.equal(run(src), 'BEEP BOOP robot\n');
-            w.close();
-        });
+        clearTimeout( _timeout )
+        _timeout = setTimeout( function () {
+            w.bundle(function (err, src) {
+                t.ifError(err);
+
+                // the cached value of robot is used
+                // because node_modules are by default ignored
+                // and thus not watched and thus not invalidate
+                // for re-rebundling
+                t.equal(run(src), 'BEEP BOOP robot\n');
+                w.close();
+            });
+        }, 500 )
     });
     w.bundle(function (err, src) {
         t.ifError(err);
@@ -48,7 +57,7 @@ test('api ignore watch default', function (t) {
             fs.writeFileSync(files.beep, 'module.exports = "BEEP";');
             fs.writeFileSync(files.boop, 'module.exports = "BOOP";');
             fs.writeFileSync(files.robot, 'module.exports = "ROBOT";');
-        }, 1000);
+        }, 500);
     });
 });
 

@@ -34,12 +34,18 @@ test('api ignore watch', function (t) {
     var w = watchify(browserify(files.main, watchify.args), {
         ignoreWatch: '**/be*.js'
     });
+    var _timeout
     w.on('update', function () {
-        w.bundle(function (err, src) {
-            t.ifError(err);
-            t.equal(run(src), 'beep BOOP ROBOT\n');
-            w.close();
-        });
+        _timeout = setTimeout( function () {
+            w.bundle(function (err, src) {
+                t.ifError(err);
+
+                // the cached value of beep is used
+                // because it has been ignored specifcally
+                t.equal(run(src), 'beep BOOP ROBOT\n');
+                w.close();
+            });
+        }, 500 )
     });
     w.bundle(function (err, src) {
         t.ifError(err);
