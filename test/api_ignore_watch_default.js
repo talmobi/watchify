@@ -48,7 +48,7 @@ test('api ignore watch default', function (t) {
                 t.equal(run(src), 'BEEP BOOP robot\n');
                 w.close();
             });
-        }, 500 )
+        }, 300 )
     });
     w.bundle(function (err, src) {
         t.ifError(err);

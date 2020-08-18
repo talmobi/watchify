@@ -46,7 +46,7 @@ test('api ignore watch', function (t) {
                 t.equal(run(src), 'beep BOOP ROBOT\n');
                 w.close();
             });
-        }, 500 )
+        }, 300 )
     });
     w.bundle(function (err, src) {
         t.ifError(err);
@@ -55,7 +55,7 @@ test('api ignore watch', function (t) {
             fs.writeFileSync(files.beep, 'module.exports = "BEEP";');
             fs.writeFileSync(files.boop, 'module.exports = "BOOP";');
             fs.writeFileSync(files.robot, 'module.exports = "ROBOT";');
-        }, 1000);
+        }, 500);
     });
 });
 
