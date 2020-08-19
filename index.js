@@ -1,8 +1,11 @@
 var through = require('through2');
 var path = require('path');
-var chokidar = require('chokidar');
 var xtend = require('xtend');
 var anymatch = require('anymatch');
+
+// var chokidar = require('chokidar');
+// var chokidar = require( '/Users/mollie/code/miteru/src/index.js' )
+var chokidar = require( 'miteru' )
 
 module.exports = watchify;
 module.exports.args = {
@@ -10,6 +13,7 @@ module.exports.args = {
 };
 
 function watchify (b, opts) {
+
     if (!opts) opts = {};
     var cache = b._options.cache;
     var pkgcache = b._options.packageCache;
@@ -114,8 +118,8 @@ function watchify (b, opts) {
         if (fwatcherFiles[file].indexOf(dep) >= 0) return;
 
         var w = b._watcher(dep, wopts);
-        w.setMaxListeners(0);
-        w.on('error', b.emit.bind(b, 'error'));
+        // w.setMaxListeners(0);
+        // w.on('error', b.emit.bind(b, 'error'));
         w.on('change', function () {
             invalidate(file);
         });
@@ -143,6 +147,7 @@ function watchify (b, opts) {
     
     function notify () {
         if (updating) {
+            clearTimeout( pending )
             pending = setTimeout(notify, delay);
         } else {
             pending = false;
@@ -158,7 +163,7 @@ function watchify (b, opts) {
     };
     
     b._watcher = function (file, opts) {
-        return chokidar.watch(file, opts);
+        return chokidar.watch( file )
     };
 
     return b;
